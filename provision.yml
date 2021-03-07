@@ -1,0 +1,8 @@
+--- 
+- hosts: k8s
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: Check the date on the server.
+      command: date
