@@ -1,8 +1,22 @@
 --- 
 - hosts: k8s
-  gather_facts: no
-  connection: local
+  
+  vars_files: 
+    - vars/main.yml
 
-  tasks:
-    - name: Check the date on the server.
-      command: date
+
+  pre_tasks: 
+    - name: Copy Flannel manifest tailored for Vagrant.
+      copy: 
+        src: files/manifests/kube-flannel-vagrant.yml 
+        dest: "~/kube-flannel-vagrant.yml"
+
+  roles: 
+    - role: geerlingguy.swap
+      tags: ['swap', 'kubernetes']
+
+    - role: geerlingguy.docker
+      tags: ['docker']
+
+    - role: geerlingguy.kubernetes
+      tags: ['kubernetes']
