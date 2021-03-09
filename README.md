@@ -54,6 +54,7 @@ vagrant up
 3. Run the ansible playbook to provision the VMs
 ```
 ansible-playbook -i inventory.yml provision.yml
+```
 
 
  
