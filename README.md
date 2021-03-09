@@ -71,3 +71,45 @@ Don't forget to destroy the vagrant VM once done with your tests.
 vagrant destroy
 rm -rf .vagrant
 ```
+
+# Example: 
+As an example, 2 different files are copied into the master nodes during the ansible provisioning. 
+* nginx-deployment.yaml --> nginx deployment (3 replicas running on port 80)
+* nginx-service.yaml --> nginx service (with nodeport 30080)
+
+
+
+On the Kubernetes master, we can then deploy them with the following commands: 
+```
+root@master:~# kubectl apply -f nginx-deployment.yaml
+deployment.apps/nginx created
+root@master:~# kubectl apply -f nginx-service.yaml
+service/nginx created
+```
+
+The service and the pods should be ready: 
+```
+root@master:~# kubectl get all
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-7db75b8b78-5tp9v   1/1     Running   0          4m46s
+pod/nginx-7db75b8b78-7kmb7   1/1     Running   0          4m46s
+pod/nginx-7db75b8b78-hljqh   1/1     Running   0          4m46s
+
+NAME                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP        19m
+service/nginx        NodePort    10.96.66.198   <none>        80:30080/TCP   83s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   3/3     3            3           4m46s
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-7db75b8b78   3         3         3       4m46s
+```
+
+You can then access the Nginx welcome page by visiting either of the following URL: 
+* http://192.168.84.2:30080/
+* http://192.168.84.3:30080/
+* http://192.168.84.4:30080/
+
+
+![Screenshot](screenshot.png)

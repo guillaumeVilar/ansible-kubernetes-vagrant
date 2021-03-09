@@ -20,3 +20,11 @@
 
     - role: geerlingguy.kubernetes
       tags: ['kubernetes']
+  
+  tasks: 
+    - name: Copy k8-files into master VM
+      copy: 
+        src: files/k8-files/
+        dest: /root/
+      delegate_to: k8s-master
+      tags: copy-files
