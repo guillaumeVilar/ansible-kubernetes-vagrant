@@ -2,7 +2,7 @@
 A local Kubernetes deployment using Vagrant and Ansible playbooks.
 This is based on the  `Ansible for DevOps` book by Jeff Geerling.
 
-The goal is create 3 Kubernetes ready Debian VMs (1 master and 2 nodes), 
+The goal is to create 3 Kubernetes ready Debian VMs (1 master and 2 nodes), 
 in order to be able to run Kubernetes tests or labs locally. 
 
 After the Vagrant provisioning and ansible provisioning finish we will have 3 VMs: 
@@ -43,11 +43,18 @@ kube-system   kube-scheduler-master            1/1     Running   0          88m
 * VirtualBox
   
 ## Commands: 
+1. Install the required roles
 ```
-ansible-galaxy install -r requirements.yml     <<< Install the required roles
-vagrant up          <<< Create the VMs
-ansible-playbook -i inventory.yml provision.yml      <<< Run the ansible playbook to provision the VMs
+ansible-galaxy install -r requirements.yml 
 ```
+2. Create the VMs
+```
+vagrant up
+```
+3. Run the ansible playbook to provision the VMs
+```
+ansible-playbook -i inventory.yml provision.yml
+
 
  
 Tested with the following versions:
@@ -58,7 +65,7 @@ Tested with the following versions:
 
 
 
-Don't forget to destroy the vagrant VM once done with the test.
+Don't forget to destroy the vagrant VM once done with your tests.
 ```
 vagrant destroy
 rm -rf .vagrant
