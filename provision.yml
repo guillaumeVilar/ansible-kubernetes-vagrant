@@ -24,7 +24,8 @@
   tasks: 
     - name: Copy k8-files into master VM
       copy: 
-        src: files/k8-files/
+        src: "{{ item }}"
         dest: /root/
+      with_fileglob: files/*.yaml
       delegate_to: k8s-master
       tags: copy-files
