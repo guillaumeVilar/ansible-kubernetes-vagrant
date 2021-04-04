@@ -1,9 +1,9 @@
 # ansible-kubernetes-vagrant
 A local Kubernetes deployment using Vagrant and Ansible playbooks.
-This is based on the  `Ansible for DevOps` book by Jeff Geerling. I made several modification in order to make it easier to use as a lab environment for Kubernetes trainings. 
+This is based on the  `Ansible for DevOps` book by Jeff Geerling. I made several modification in order to make it easier to use as an up to date lab environment for Kubernetes trainings.
 
 The goal is to create 3 Kubernetes ready Debian VMs (1 master and 2 nodes), 
-in order to be able to run Kubernetes tests or labs locally. 
+in order to be able to run Kubernetes tests or labs locally. The version of Kubernetes deployed is: 1.20.5-00.
 
 After the Vagrant provisioning and ansible provisioning finish, we will have 3 VMs (IPs by default): 
 * master.k8s.test, ip: 192.168.84.2
@@ -39,18 +39,12 @@ kube-system   kube-proxy-q9kwk                 1/1     Running   0          89m
 kube-system   kube-scheduler-master            1/1     Running   0          88m
 ```
 
-Different example of Kubernetes files are available at the root directory: 
+Different example of Kubernetes files are available in the /root/files directory: 
 ```
-root@master:~# ls
+root@master:~/files# ls
 nginx-deployment.yaml  nginx-manual-scheduling.yaml  nginx-service.yaml
 ```
-Alternatively, we can use the /vagrant directory in the VM that is automatically in sync with the host: 
-```
-root@master:~# cd /vagrant/files/
-root@master:/vagrant/files# ls
-manifests  nginx-deployment.yaml  nginx-manual-scheduling.yaml	nginx-service.yaml
-```
-This directory allow us to do changes on the host (using an IDE for example) that will be automatically reflected on the VMs filesystem.
+This folder is synced with the host machine to the guest machines allowing you to continue working on the project's files on the host machine (using an IDE for example), and the changes will be reflected on the VMs filesystem. 
 
 # Installation:
 ## Prerequisite:
@@ -81,7 +75,7 @@ Alternatively you can use directly the run.sh script:
 *Note: the creation of the VMs and the installation of the kubernetes stack can take some time (~ 10-12 minutes on my laptop).*
  
 Tested with the following versions:
-* Ansible 2.10.5
+* Ansible 2.10.5 and 2.10.7
 * Vagrant 2.2.7
 * VirtualBox 6.0.12
 * macOS Catalina 10.15.7
@@ -95,12 +89,10 @@ rm -rf .vagrant
 ```
 
 # Example: 
-Different Kubernetes files are copied into the master nodes during the ansible provisioning to the /root directory of the master node. 
+Different Kubernetes files are available in the /root/files directory of the master node. 
 * nginx-deployment.yaml --> nginx deployment (3 replicas running on port 80)
 * nginx-service.yaml --> nginx service (with nodeport 30080)
 * nginx-manual-scheduling --> nginx pod to run on a specific node (node2)
-
-This directory is also shared with the VMs (/vagrant/ directory in the VMs).
 
 On the Kubernetes master, we can then deploy them with the following commands: 
 ```

@@ -8,7 +8,7 @@
   pre_tasks: 
     - name: Copy Flannel manifest tailored for Vagrant.
       copy: 
-        src: files/manifests/kube-flannel-vagrant.yml 
+        src: install-files/manifests/kube-flannel-vagrant.yml 
         dest: "~/kube-flannel-vagrant.yml"
 
   roles: 
@@ -20,12 +20,3 @@
 
     - role: geerlingguy.kubernetes
       tags: ['kubernetes']
-  
-  tasks: 
-    - name: Copy k8-files into master VM
-      copy: 
-        src: "{{ item }}"
-        dest: /root/
-      with_fileglob: files/*.yaml
-      delegate_to: k8s-master
-      tags: copy-files

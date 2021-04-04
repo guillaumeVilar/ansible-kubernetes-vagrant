@@ -10,6 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         v.linked_clone = true
     end
 
+    config.vm.synced_folder "files", "/root/files"
+
     boxes = [
         { :name => "master.k8s.test", :ip => "192.168.84.2" },
         { :name => "node1.k8s.test", :ip => "192.168.84.3" },
