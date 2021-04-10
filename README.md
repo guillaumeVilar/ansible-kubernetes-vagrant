@@ -89,16 +89,18 @@ rm -rf .vagrant
 ```
 
 # Example: 
-Different Kubernetes files are available in the /root/files directory of the master node. 
-* nginx-deployment.yaml --> nginx deployment (3 replicas running on port 80)
-* nginx-service.yaml --> nginx service (with nodeport 30080)
-* nginx-manual-scheduling --> nginx pod to run on a specific node (node2)
+Different Kubernetes files are available in the `/root/files` directory of the master node. 
+* `deployment-nginx.yaml` --> nginx deployment (3 replicas running on port 80)
+* `service-nginx.yaml` --> nginx service (with nodeport 30080)
+* `manual-scheduling-nginx.yaml` --> nginx pod to run on a specific node (node2)
+* `replicaset-nginx.yaml` --> replicaset of nginx pods (3 replicas)
 
-On the Kubernetes master, we can then deploy them with the following commands: 
+On the Kubernetes master, we can deploy the deployment and service definition file with the following commands: 
 ```
-root@master:~# kubectl apply -f nginx-deployment.yaml
+root@master:~# cd files/
+root@master:~/files# kubectl apply -f deployment-nginx.yaml 
 deployment.apps/nginx created
-root@master:~# kubectl apply -f nginx-service.yaml
+root@master:~/files# kubectl apply -f service-nginx.yaml 
 service/nginx created
 ```
 
